@@ -18,6 +18,9 @@ class Disrupt():
 			except:exit()
 		os.system('clear')
 		d = self.get_networks()
+		if len(d) == 0:
+			input(f'{RED}No WIFI Networks FOUND{DEFAULT}, Press Enter To Exit')
+			exit()
 		l_ssid = max([len(d[i]['SSID']) for i in d])
 		print(f"NO.    BSSID{' ' * 16}SSID{' ' * (l_ssid)}SIG{' ' * 4}CHANNEL\n{'-'*(l_ssid + 46)}")
 		for i in d:
@@ -57,7 +60,7 @@ class Disrupt():
 	def get_devices(self):
 		cmd = 'ifconfig'
 		a = os.popen(cmd).read().split('\n\n')
-		d = [i.split(': ')[0] for i in a if len(i.split(': ')[0]) != 0 and 'eth' not in i.split(': ')[0] and i.split(': ')[0] != 'lo']
+		d = [i.split(': ')[0] for i in a if len(i.split(': ')[0]) != 0 and 'wlan' in i.split(': ')[0]]
 		return d
 
 if __name__ == '__main__':
